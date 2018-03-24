@@ -1,8 +1,33 @@
 print"hello buddy"
 print"let's get started"
 spy_name = raw_input(" what is your spy name?? ")
-print "welcome "+spy_name
-spy_salutation = raw_input("what should i call you(mr. or ms. )?")
-spy_name = spy_salutation + spy_name
-print spy_name
-print "alright  spy_name i'd like to know a little bit about you "
+if len(spy_name)>2:
+    print "welcome "+spy_name
+    spy_salutation = raw_input("what should i call you(mr. or ms. )?")
+    if spy_salutation=="mr." or spy_salutation=="ms.":
+        spy_name = spy_salutation + " " + spy_name
+        spy_no = raw_input("enter your mobile no")
+        print "alright" + spy_salutation + " " + spy_name + " i wolud like to know little bit more about u"
+        spy_age = input(" what is your age ")
+        if 50>spy_age>16:
+            print("you are most welcome to spy_chat app")
+
+            spy_rating = input("what is your spy_rating")
+            if spy_rating>5.0:
+                print "you are an very good spy"
+            elif 3.5>=spy_rating<=5.0:
+                print "you are an good spy"
+            elif 2.5>=spy_rating<=3.5:
+                print "you are an average spy"
+            else:
+                print "you have to learn more"
+
+                spy_is_online = True
+            print "authentication is complete , welcome: " + spy_name + " age: " + str(spy_age) + " rating: " + str(spy_rating) + " welcome to spy_chat app "
+        else:
+                print("you are no eligible for being spy")
+
+    else:
+                print"invalid slutation"
+else:
+           print("ooopppppppsssssss , this not a valid name")
