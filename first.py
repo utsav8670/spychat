@@ -1,5 +1,6 @@
 from userdetail import spy ,Spy,chatMessage # importing a file with specific variables
 from datetime import datetime#importing date time
+import csv
 
 time=datetime.now() # current date and time
 print time#Display to the user
@@ -8,9 +9,28 @@ from steganography.steganography import Steganography#importing Steganography mo
 print 'Hello Buddy' #greetings given to the user
 print 'Let\'s get started' #initialising
 STATUS_MESSAGE=['Sleeping', 'Eating', 'I can see you']#predefined status
-frnds1 =Spy['MR.','Naman',26,2.3]
-frnds2 =Spy['MR.','Chandan',27,2.5]
-friends = [frnds1,frnds2]
+frnd1 =Spy('MR.', 'Naman', 26, 2.3)#adding a frnd
+frnd2 =Spy('MR.', 'Chandan', 27, 2.5)#adding a frnd
+friends = [frnd1, frnd2]
+
+def load_frnds():
+    with open('friends.csv', 'rb') as friends_data:
+        reader = list(csv.reader(friends_data))
+
+
+        for row in reader[1:]:
+            frnd = Spy(name=row[1], salutation=row[0], age=row[2], rating=[3])
+        friends.append(frnd)
+load_frnds()
+
+def load_chat():
+    with open('chat.csv', 'rd') as friends_data:
+        reader =list(csv.reader(friends_data))
+
+        for row in reader[1:]:
+            chat = Spy(seceret_text=row[0], time=row[2], sent_by_me=row[2], frnd_name=[3])
+        chats.append(chat)
+    load_chat()
 
 def add_status(c_status):#function for statud
     if c_status != None:#checking condition if status is not none
@@ -33,19 +53,17 @@ def add_status(c_status):#function for statud
     return updated_status#returning back
 
 def add_friend():
-    frnd = {#defining a list
-       'name':'',
-        'age': 0,
-        'rating':0.0,
-        'online':True,
-        'chats':[]
+    frnd = Spy('','',0,0.0)
+    frnd.name = raw_input('What is your name ? ')#required an input
+    frnd.salutation = raw_input('what should i call u MR. OR MS.')
+    frnd.age = input('what is your age')#required an input
+    frnd.rating = input('What is your rating ? ')#required an input
+    frnd.is_online = True#require an input
+    if len(frnd.name) > 2 and 12 < frnd.age < 50 and frnd.rating > spy.rating and frnd.name.isalpha():#checking for the condition
+        with open('friend.csv','a') as friends_data:
+            writer =csv.writer(friends_data)#writing the data in friends data
+            writer.writerow([frnd.name,frnd.salutation,frnd.rating,frnd.age,frnd.is_online])
 
-    }
-    frnd['name'] = raw_input('What is your name ? ')#required an input
-    frnd['age'] = input('What is your age ? ')#required an input
-    frnd['rating'] = input('What is your rating ? ')#required an input
-    if len(frnd['name']) > 2 and 12 < frnd['age'] < 50 and frnd['rating'] > spy.rating and frnd['name'].isalpha():#checking for the condition
-        friends.append(frnd)#appending in the list
 
     else:
         print 'Friend cannot be added..'#displaying for the user
@@ -72,6 +90,9 @@ def send_message():#sending a message
     new_chat=chatMessage[secret_text,True]
     friends[select_friend].chats.append( new_chat )  # appending the friend chat detail
     print'Your message is ready.'#displaying for the user
+    with open('chat.csv', 'a') as friends_data:
+        writer = csv.writer(friends_data)  # writing the data in friends data
+        writer.writerow([secret_text ,time.strftime('%d %m %H'),spy.chats,friends[select_friend].name])
 
 def read_message():#reading a message
     select_friend = select_frnd()#index value
@@ -95,7 +116,7 @@ def start_chat(spy_name,spy_age,spy_rating):#user define function created
     current_status = None
     show_menu = True#by default value true for validation
     while show_menu:#using loop for multiple times show the same thing
-        choice = input('What do you want to do ?\n1.Add a status\n2.Add a friend\n3.Send a message\n4.Read a message\n5.Read chats from user\n0.Exit ')#choices given to the userinput from the user
+        choice = input('What do you want to d/o ?\n1.Add a status\n2.Add a friend\n3.Send a message\n4.Read a message\n5.Read chats from user\n0.Exit ')#choices given to the userinput from the user
         if choice == 1:#conditional Statement
             current_status = add_status(current_status)#calling add  status function
             print'Updated status is ' + current_status#displaying for the user

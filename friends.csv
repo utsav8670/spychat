@@ -1,0 +1,4 @@
+name,salutation,rating,age,is_online
+pawan ,MR. , 3.1 , 28 , True
+satyam ,MR. , 3.4 , 29 , True
+shankar ,MR. , 3.0 , 27 , True
